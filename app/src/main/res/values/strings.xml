@@ -3,4 +3,6 @@
     <string name="logo">logo</string>
     <string name="need_an_account">NEED AN ACCOUNT ?</string>
     <string name="already_have_an_account">ALREADY HAVE AN ACCOUNT</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
 </resources>

@@ -2,6 +2,7 @@ package com.vikanshu.flamechat
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -44,7 +45,7 @@ class SplashActivity : AppCompatActivity() {
 
     // function for have account button pressed
     fun alreadyHaveAccountPressed(v: View){
-        // move to log in activity
+        startActivity(Intent(this,LogInActivity::class.java))
     }
 
     // function for need account pressed

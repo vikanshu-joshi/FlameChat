@@ -12,4 +12,8 @@
         <item name="colorPrimaryDark">@color/dark_gray</item>
     </style>
 
+    <style name="whiteBackArrow">
+        <item name="android:homeAsUpIndicator">@drawable/ic_arrow_back_white_24dp</item>
+    </style>
+
 </resources>
