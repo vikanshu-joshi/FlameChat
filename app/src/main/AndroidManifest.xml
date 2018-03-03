@@ -38,7 +38,10 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".LogInActivity"
+        <activity
+            android:name=".LogInActivity"
+            android:parentActivityName=".SplashActivity" />
+        <activity android:name=".CreateAccountActivity"
             android:parentActivityName=".SplashActivity"/>
     </application>
 

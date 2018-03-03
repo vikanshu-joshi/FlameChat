@@ -23,11 +23,13 @@ class LogInActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_log_in)
+        // set toolbar
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         toolbar?.title = "Log In"
         toolbar?.setTitleTextColor(resources.getColor(R.color.white))
         setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true) // adding back arrow in toolbar
+
         progressDialog = ProgressDialog(this)
         email = findViewById(R.id.email_log_in)
         password = findViewById(R.id.password_log_in)

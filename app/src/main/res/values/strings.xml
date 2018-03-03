@@ -5,4 +5,7 @@
     <string name="already_have_an_account">ALREADY HAVE AN ACCOUNT</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="create_account">Create Account</string>
+    <string name="fill_your_details">Fill your details</string>
 </resources>
