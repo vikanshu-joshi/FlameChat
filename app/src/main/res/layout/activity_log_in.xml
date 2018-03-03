@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="30dp"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
@@ -29,14 +29,15 @@
         android:textAlignment="textStart"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include_toolbar"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
         app:met_errorColor="?attr/colorError"
         app:met_floatingLabel="highlight"
-        app:met_textColorHint="@color/dark_gray"
         app:met_floatingLabelAnimating="true"
         app:met_floatingLabelText="Email"
-        app:met_floatingLabelTextColor="@color/colorPrimary" />
+        app:met_floatingLabelTextColor="@color/colorPrimary"
+        app:met_textColorHint="@color/dark_gray" />
 
     <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/password_log_in"
@@ -62,18 +63,35 @@
         app:met_floatingLabelTextColor="@color/colorPrimary" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/logInBtnSignIn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="30dp"
         android:background="@color/colorPrimary"
+        android:onClick="logInBtnPressed"
         android:text="Log In"
         android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password_log_in" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="43dp"
+        android:layout_marginEnd="30dp"
+        android:fontFamily="@font/montserrat_alternates"
+        android:text="Enter your details"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include_toolbar" />
 
 </android.support.constraint.ConstraintLayout>
