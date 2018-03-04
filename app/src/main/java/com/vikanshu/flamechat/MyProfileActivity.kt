@@ -1,13 +1,11 @@
 package com.vikanshu.flamechat
 
 import android.app.ProgressDialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
-import android.text.Editable
 import android.text.TextUtils
 import android.view.View
 import android.widget.*
@@ -17,8 +15,14 @@ import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.squareup.picasso.Picasso
+import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageView
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_my_profile.*
+import android.app.Activity
+import android.content.Context
+import android.net.ConnectivityManager
+
 
 class MyProfileActivity : AppCompatActivity() {
 
@@ -39,7 +43,7 @@ class MyProfileActivity : AppCompatActivity() {
             val image = p0?.child("image")?.value.toString()
             if (image == "default") profileImage?.setImageResource(R.drawable.default_avatar)
             else Picasso.with(this@MyProfileActivity).load(Uri.parse(image))
-                    .placeholder(R.drawable.default_avatar).into(profileImage)
+                    .placeholder(R.drawable.loading).into(profileImage)
         }
 
         override fun onCancelled(p0: DatabaseError?) {
@@ -94,6 +98,7 @@ class MyProfileActivity : AppCompatActivity() {
         firebaseDatabase = FirebaseDatabase.getInstance().reference.child("USERS")?.child(firebaseUser?.uid)
         firebaseStorage = FirebaseStorage.getInstance().reference.child("profile_images")
         firebaseDatabase?.addValueEventListener(databaseListener)
+        firebaseUser?.reload()
         if (firebaseUser!!.isEmailVerified) tick?.setImageResource(R.drawable.green_tick)
         else tick?.setImageResource(R.drawable.red_tick)
     }
@@ -130,6 +135,39 @@ class MyProfileActivity : AppCompatActivity() {
         alertBox?.show()
     }
 
+    // function if tick image is clicked
+    fun tickTouched(v: View) {
+        if (firebaseUser!!.isEmailVerified) showToast("Your email is verified")
+        else {
+            showToast("Your email is not verified")
+            val alert = AlertDialog.Builder(this)
+            alert.setMessage("Send an email verification link ?")
+            alert.setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
+            alert.setPositiveButton("Send") { dialog, _ ->
+                firebaseUser?.sendEmailVerification()?.addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        showToast("verification link sent")
+                    } else {
+                        showToast("unable to send verification link")
+                    }
+                }
+            }
+            alert.show()
+        }
+    }
+
+    // function for change profile image
+    fun changeProfileImage(v: View) {
+        if (firebaseUser!!.isEmailVerified) {
+            val intent = Intent()
+            intent.type = "image/*"
+            intent.action = Intent.ACTION_GET_CONTENT
+            startActivityForResult(Intent.createChooser(intent, "select image from"), 2102)
+        } else {
+            showToast("You need to verify your email first")
+        }
+    }
+
     override fun onPause() {
         firebaseDatabase?.removeEventListener(databaseListener)
         super.onPause()
@@ -138,6 +176,61 @@ class MyProfileActivity : AppCompatActivity() {
     // function to show a toast
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+    }
+
+    // function to update profile image
+    private fun updateImage(imageUri: Uri) {
+        progressDialog?.setMessage("Please Wait. Updating Profile.")
+        progressDialog?.show()
+        if (isNetworkAvailable()) {
+            firebaseStorage?.child(firebaseUser?.uid + ".jpeg")?.putFile(imageUri)?.addOnCompleteListener {
+                if (it.isSuccessful) {
+                    val downloadUri = it.result.downloadUrl
+                    firebaseDatabase?.child("image")?.setValue(downloadUri.toString())?.addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            progressDialog?.dismiss()
+                            Picasso.with(this@MyProfileActivity).load(downloadUri)
+                                    .placeholder(R.drawable.loading).into(profileImage)
+                            showToast("profile image updated successfully.")
+                        } else {
+                            progressDialog?.dismiss()
+                            showToast(it.exception?.message.toString())
+                        }
+                    }
+                } else {
+                    progressDialog?.dismiss()
+                    showToast(it.exception?.message.toString())
+                }
+            }
+        } else {
+            progressDialog?.dismiss()
+            showToast("No Internet Connection")
+        }
+    }
+
+    //this function checks whether there is Internet Access or not
+    private fun isNetworkAvailable(): Boolean {
+        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetworkInfo = connectivityManager.activeNetworkInfo
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 2102) {
+            CropImage.activity(data?.data).setAspectRatio(1, 1)
+                    .setCropShape(CropImageView.CropShape.OVAL).start(this@MyProfileActivity)
+        }
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            val result = CropImage.getActivityResult(data)
+            if (resultCode == Activity.RESULT_OK) {
+                val resultUri = result.uri
+                updateImage(resultUri)
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                val error = result.error
+                showToast(error.message.toString())
+            }
+        }
     }
 
 }
