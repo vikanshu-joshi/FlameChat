@@ -105,6 +105,7 @@
         android:layout_marginBottom="20dp"
         android:background="@color/colorPrimary"
         android:fontFamily="@font/montserrat_alternates"
+        android:onClick="changeStatus"
         android:text="@string/change_status"
         android:textColor="@color/white"
         android:textSize="16sp"
