@@ -47,8 +47,9 @@
         <activity android:name=".AllChatsActivity" />
         <activity android:name=".FriendsActivity" />
         <activity android:name=".AddFriendActivity" />
-        <activity android:name=".MyProfileActivity" />
-        <activity android:name=".RequestsActivity"></activity>
+        <activity android:name=".MyProfileActivity"
+            android:theme="@style/DarkGrayTop"/>
+        <activity android:name=".RequestsActivity"/>
     </application>
 
 </manifest>

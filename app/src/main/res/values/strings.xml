@@ -13,4 +13,7 @@
     <string name="add_friend">Add Friend</string>
     <string name="friend_requests">Friend Requests</string>
     <string name="profile">Profile</string>
+    <string name="user_verified_or_not">user verified or not</string>
+    <string name="logout">LogOut</string>
+    <string name="change_status">Change Status</string>
 </resources>
