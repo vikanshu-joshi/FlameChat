@@ -69,9 +69,10 @@ class CreateAccountActivity : AppCompatActivity() {
                 val usermap = HashMap<String,String>()
                 usermap["username"] = name;usermap["email"] = mail;usermap["password"] = pass
                 usermap["image"] = "default";usermap["status"] = "I am new to FlameChat"
-                firebaseDatabase?.child("USERS")?.setValue(usermap)?.addOnCompleteListener {
+                firebaseDatabase?.child("USERS")?.child(firebaseAuth?.uid)?.setValue(usermap)?.addOnCompleteListener {
                     if (it.isSuccessful){
                         // successful in saving data
+                        progressDialog?.dismiss()
                         val i = Intent(this,AllChatsActivity::class.java)
                         i.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
                         startActivity(i)
