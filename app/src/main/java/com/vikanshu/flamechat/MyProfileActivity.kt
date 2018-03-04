@@ -22,6 +22,8 @@ import kotlinx.android.synthetic.main.activity_my_profile.*
 import android.app.Activity
 import android.content.Context
 import android.net.ConnectivityManager
+import com.squareup.picasso.Callback
+import com.squareup.picasso.NetworkPolicy
 
 
 class MyProfileActivity : AppCompatActivity() {
@@ -43,7 +45,20 @@ class MyProfileActivity : AppCompatActivity() {
             val image = p0?.child("image")?.value.toString()
             if (image == "default") profileImage?.setImageResource(R.drawable.default_avatar)
             else Picasso.with(this@MyProfileActivity).load(Uri.parse(image))
-                    .placeholder(R.drawable.loading).into(profileImage)
+                    .networkPolicy(NetworkPolicy.OFFLINE).placeholder(R.drawable.loading)
+                    .into(profileImage,object : Callback{
+                        override fun onSuccess() {}
+                        override fun onError() {
+                            Picasso.with(this@MyProfileActivity).load(Uri.parse(image)).placeholder(R.drawable.loading)
+                                    .into(profileImage,object : Callback{
+                                        override fun onError() {
+                                            profileImage?.setImageResource(R.drawable.default_avatar)
+                                            showToast("error in loading profile image")
+                                        }
+                                        override fun onSuccess() {}
+                                    })
+                        }
+                    })
         }
 
         override fun onCancelled(p0: DatabaseError?) {
@@ -96,6 +111,7 @@ class MyProfileActivity : AppCompatActivity() {
         firebaseAuth = FirebaseAuth.getInstance()
         firebaseUser = firebaseAuth?.currentUser
         firebaseDatabase = FirebaseDatabase.getInstance().reference.child("USERS")?.child(firebaseUser?.uid)
+        firebaseDatabase?.keepSynced(true)
         firebaseStorage = FirebaseStorage.getInstance().reference.child("profile_images")
         firebaseDatabase?.addValueEventListener(databaseListener)
         firebaseUser?.reload()
