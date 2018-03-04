@@ -59,8 +59,9 @@ class SplashActivity : AppCompatActivity() {
     private fun move(){
         if (FirebaseAuth.getInstance().currentUser != null){
             // move to main screen
-        }else{
-            // stay here
+            val i = Intent(this,AllChatsActivity::class.java)
+            i.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(i)
         }
     }
 

@@ -41,8 +41,10 @@
         <activity
             android:name=".LogInActivity"
             android:parentActivityName=".SplashActivity" />
-        <activity android:name=".CreateAccountActivity"
-            android:parentActivityName=".SplashActivity"/>
+        <activity
+            android:name=".CreateAccountActivity"
+            android:parentActivityName=".SplashActivity" />
+        <activity android:name=".AllChatsActivity"></activity>
     </application>
 
 </manifest>
