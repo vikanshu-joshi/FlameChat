@@ -8,4 +8,9 @@
     <string name="username">Username</string>
     <string name="create_account">Create Account</string>
     <string name="fill_your_details">Fill your details</string>
+    <string name="friends">Friends</string>
+    <string name="chats">Chats</string>
+    <string name="add_friend">Add Friend</string>
+    <string name="friend_requests">Friend Requests</string>
+    <string name="profile">Profile</string>
 </resources>

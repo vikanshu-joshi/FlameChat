@@ -1,6 +1,7 @@
 package com.vikanshu.flamechat
 
 import android.app.ProgressDialog
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.Toolbar
@@ -50,6 +51,9 @@ class LogInActivity : AppCompatActivity() {
                 if (it.isSuccessful){
                     // user successfully logged in
                     progressDialog?.dismiss()
+                    val i = Intent(this,AllChatsActivity::class.java)
+                    i.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+                    startActivity(i)
                 }else{
                     // error in logging in
                     progressDialog?.dismiss()

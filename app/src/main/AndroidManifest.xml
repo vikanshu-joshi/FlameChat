@@ -44,7 +44,11 @@
         <activity
             android:name=".CreateAccountActivity"
             android:parentActivityName=".SplashActivity" />
-        <activity android:name=".AllChatsActivity"></activity>
+        <activity android:name=".AllChatsActivity" />
+        <activity android:name=".FriendsActivity" />
+        <activity android:name=".AddFriendActivity" />
+        <activity android:name=".MyProfileActivity" />
+        <activity android:name=".RequestsActivity"></activity>
     </application>
 
 </manifest>
