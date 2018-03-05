@@ -12,6 +12,7 @@ import android.view.View
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.vikanshu.flamechat.BottomNavigationActivities.AllChatsActivity
 
 class SplashActivity : AppCompatActivity() {
 

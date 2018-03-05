@@ -1,8 +1,9 @@
-package com.vikanshu.flamechat
+package com.vikanshu.flamechat.BottomNavigationActivities
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.vikanshu.flamechat.R
 import kotlinx.android.synthetic.main.activity_all_chats.*
 
 class AllChatsActivity : AppCompatActivity() {
@@ -15,22 +16,22 @@ class AllChatsActivity : AppCompatActivity() {
         bottom_navigation?.setOnNavigationItemSelectedListener{
             when (it.itemId){
                 R.id.friends -> {
-                    startActivity(Intent(this,FriendsActivity::class.java))
+                    startActivity(Intent(this, FriendsActivity::class.java))
                     this.finish()
                     true
                 }
                 R.id.add_friend -> {
-                    startActivity(Intent(this,AddFriendActivity::class.java))
+                    startActivity(Intent(this, AddFriendActivity::class.java))
                     this.finish()
                     true
                 }
                 R.id.requests -> {
-                    startActivity(Intent(this,RequestsActivity::class.java))
+                    startActivity(Intent(this, RequestsActivity::class.java))
                     this.finish()
                     true
                 }
                 R.id.profile -> {
-                    startActivity(Intent(this,MyProfileActivity::class.java))
+                    startActivity(Intent(this, MyProfileActivity::class.java))
                     this.finish()
                     true
                 }

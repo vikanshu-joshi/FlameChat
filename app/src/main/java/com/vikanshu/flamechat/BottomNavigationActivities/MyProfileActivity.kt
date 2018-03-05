@@ -1,4 +1,4 @@
-package com.vikanshu.flamechat
+package com.vikanshu.flamechat.BottomNavigationActivities
 
 import android.app.ProgressDialog
 import android.content.Intent
@@ -24,6 +24,8 @@ import android.content.Context
 import android.net.ConnectivityManager
 import com.squareup.picasso.Callback
 import com.squareup.picasso.NetworkPolicy
+import com.vikanshu.flamechat.R
+import com.vikanshu.flamechat.SplashActivity
 
 
 class MyProfileActivity : AppCompatActivity() {
@@ -192,7 +194,7 @@ class MyProfileActivity : AppCompatActivity() {
     fun logout(v: View){
         firebaseAuth?.signOut()
         showToast("You have logged out successfully")
-        startActivity(Intent(this,SplashActivity::class.java))
+        startActivity(Intent(this, SplashActivity::class.java))
         this.finish()
     }
 

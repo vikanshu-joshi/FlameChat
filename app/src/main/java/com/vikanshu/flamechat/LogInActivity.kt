@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.rengwuxian.materialedittext.MaterialEditText
+import com.vikanshu.flamechat.BottomNavigationActivities.AllChatsActivity
 
 class LogInActivity : AppCompatActivity() {
 
@@ -51,7 +52,7 @@ class LogInActivity : AppCompatActivity() {
                 if (it.isSuccessful){
                     // user successfully logged in
                     progressDialog?.dismiss()
-                    val i = Intent(this,AllChatsActivity::class.java)
+                    val i = Intent(this, AllChatsActivity::class.java)
                     i.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
                     startActivity(i)
                 }else{

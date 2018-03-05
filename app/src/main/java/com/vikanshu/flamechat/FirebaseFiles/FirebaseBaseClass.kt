@@ -14,7 +14,7 @@ class FirebaseBaseClass: Application() {
         val builder = Picasso.Builder(this)
         builder.downloader(OkHttp3Downloader(this,Integer.MAX_VALUE.toLong()))
         val built = builder.build()
-        built.setIndicatorsEnabled(true)
+        built.setIndicatorsEnabled(false)
         built.isLoggingEnabled = true
         Picasso.setSingletonInstance(built)
     }

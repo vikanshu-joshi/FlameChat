@@ -13,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.rengwuxian.materialedittext.MaterialEditText
+import com.vikanshu.flamechat.BottomNavigationActivities.AllChatsActivity
 
 class CreateAccountActivity : AppCompatActivity() {
 
@@ -73,7 +74,7 @@ class CreateAccountActivity : AppCompatActivity() {
                     if (it.isSuccessful){
                         // successful in saving data
                         progressDialog?.dismiss()
-                        val i = Intent(this,AllChatsActivity::class.java)
+                        val i = Intent(this, AllChatsActivity::class.java)
                         i.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
                         startActivity(i)
                     }else{

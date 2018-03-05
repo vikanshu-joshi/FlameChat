@@ -5,16 +5,16 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+        android:name=".FirebaseFiles.FirebaseBaseClass"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name=".FirebaseFiles.FirebaseBaseClass">
+        android:theme="@style/AppTheme">
         <service android:name=".FirebaseFiles.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
@@ -28,8 +28,8 @@
 
         <activity
             android:name=".SplashActivity"
-            android:theme="@style/DarkGrayTop"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/DarkGrayTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -49,20 +49,29 @@
             android:name=".CreateAccountActivity"
             android:parentActivityName=".SplashActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".AllChatsActivity"
+        <activity
+            android:name=".BottomNavigationActivities.AllChatsActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".FriendsActivity"
+        <activity
+            android:name=".BottomNavigationActivities.FriendsActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".AddFriendActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".MyProfileActivity"
+        <activity
+            android:name=".BottomNavigationActivities.AddFriendActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".BottomNavigationActivities.MyProfileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/DarkGrayTop" />
+        <activity
+            android:name=".BottomNavigationActivities.RequestsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:parentActivityName=".BottomNavigationActivities.MyProfileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Base.Theme.AppCompat" />
+        <activity android:name=".UserProfileActivity"
             android:theme="@style/DarkGrayTop"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".RequestsActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat"
-            android:parentActivityName=".MyProfileActivity"
             android:screenOrientation="portrait"/>
     </application>
 
