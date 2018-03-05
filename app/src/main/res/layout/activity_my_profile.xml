@@ -91,6 +91,7 @@
         android:layout_marginBottom="20dp"
         android:background="?attr/colorError"
         android:fontFamily="@font/montserrat_alternates"
+        android:onClick="logout"
         android:text="@string/logout"
         android:textColor="@color/white"
         android:textSize="16sp"

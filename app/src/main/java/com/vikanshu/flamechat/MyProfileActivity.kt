@@ -121,34 +121,38 @@ class MyProfileActivity : AppCompatActivity() {
 
     // function for change status pressed
     fun changeStatus(v: View) {
-        val view = layoutInflater.inflate(R.layout.single_edittext_alert, null)
-        val input = view.findViewById<EditText>(R.id.single_input)
-        input.setText(status?.text)
-        input.setSelection(input.length())
-        alertBox?.setView(view)
-        alertBox?.setMessage("Enter New Status")
-        alertBox?.setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
-        alertBox?.setPositiveButton("Update") { dialog, _ ->
-            if (TextUtils.isEmpty(input.text.toString())) {
-                dialog.dismiss()
-            } else {
-                progressDialog?.setMessage("Please Wait. Updating ......")
-                progressDialog?.show()
-                firebaseDatabase?.child("status")?.setValue(input?.text.toString())?.addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        dialog.dismiss()
-                        progressDialog?.dismiss()
-                        status?.text = input.text.toString()
-                        showToast("Status updates successfully")
-                    } else {
-                        dialog.dismiss()
-                        progressDialog?.dismiss()
-                        showToast(it.exception?.message.toString())
+        if (isNetworkAvailable()){
+            val view = layoutInflater.inflate(R.layout.single_edittext_alert, null)
+            val input = view.findViewById<EditText>(R.id.single_input)
+            input.setText(status?.text)
+            input.setSelection(input.length())
+            alertBox?.setView(view)
+            alertBox?.setMessage("Enter New Status")
+            alertBox?.setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
+            alertBox?.setPositiveButton("Update") { dialog, _ ->
+                if (TextUtils.isEmpty(input.text.toString())) {
+                    dialog.dismiss()
+                } else {
+                    progressDialog?.setMessage("Please Wait. Updating ......")
+                    progressDialog?.show()
+                    firebaseDatabase?.child("status")?.setValue(input?.text.toString())?.addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            dialog.dismiss()
+                            progressDialog?.dismiss()
+                            status?.text = input.text.toString()
+                            showToast("Status updates successfully")
+                        } else {
+                            dialog.dismiss()
+                            progressDialog?.dismiss()
+                            showToast(it.exception?.message.toString())
+                        }
                     }
                 }
             }
+            alertBox?.show()
+        }else if(!isNetworkAvailable()){
+            showToast("No Internet Connection")
         }
-        alertBox?.show()
     }
 
     // function if tick image is clicked
@@ -184,6 +188,14 @@ class MyProfileActivity : AppCompatActivity() {
         }
     }
 
+    // function to log out
+    fun logout(v: View){
+        firebaseAuth?.signOut()
+        showToast("You have logged out successfully")
+        startActivity(Intent(this,SplashActivity::class.java))
+        this.finish()
+    }
+
     override fun onPause() {
         firebaseDatabase?.removeEventListener(databaseListener)
         super.onPause()
@@ -195,7 +207,7 @@ class MyProfileActivity : AppCompatActivity() {
     }
 
     // function to update profile image
-    private fun updateImage(imageUri: Uri) {
+    private fun updateImage(imageUri: Uri){
         progressDialog?.setMessage("Please Wait. Updating Profile.")
         progressDialog?.show()
         if (isNetworkAvailable()) {
@@ -206,7 +218,20 @@ class MyProfileActivity : AppCompatActivity() {
                         if (it.isSuccessful) {
                             progressDialog?.dismiss()
                             Picasso.with(this@MyProfileActivity).load(downloadUri)
-                                    .placeholder(R.drawable.loading).into(profileImage)
+                                    .networkPolicy(NetworkPolicy.OFFLINE).placeholder(R.drawable.loading)
+                                    .into(profileImage,object : Callback{
+                                        override fun onSuccess() {}
+                                        override fun onError() {
+                                            Picasso.with(this@MyProfileActivity).load(downloadUri).placeholder(R.drawable.loading)
+                                                    .into(profileImage,object : Callback{
+                                                        override fun onError() {
+                                                            profileImage?.setImageResource(R.drawable.default_avatar)
+                                                            showToast("error in loading profile image")
+                                                        }
+                                                        override fun onSuccess() {}
+                                                    })
+                                        }
+                                    })
                             showToast("profile image updated successfully.")
                         } else {
                             progressDialog?.dismiss()
