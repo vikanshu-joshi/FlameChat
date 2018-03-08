@@ -52,12 +52,14 @@ class SplashActivity : AppCompatActivity() {
     fun alreadyHaveAccountPressed(v: View) {
         // move to log in activity
         startActivity(Intent(this, LogInActivity::class.java))
+        this.finish()
     }
 
     // function for need account pressed
     fun needAccountPressed(v: View) {
         // move to create account activity
         startActivity(Intent(this, CreateAccountActivity::class.java))
+        this.finish()
     }
 
     // function to move or stay

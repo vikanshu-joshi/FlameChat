@@ -55,6 +55,7 @@ class LogInActivity : AppCompatActivity() {
                     val i = Intent(this, AllChatsActivity::class.java)
                     i.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
                     startActivity(i)
+                    this.finish()
                 }else{
                     // error in logging in
                     progressDialog?.dismiss()

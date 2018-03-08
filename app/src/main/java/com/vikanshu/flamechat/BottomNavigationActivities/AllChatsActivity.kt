@@ -3,10 +3,53 @@ package com.vikanshu.flamechat.BottomNavigationActivities
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.vikanshu.flamechat.AllUsersData
+import com.vikanshu.flamechat.BottomNavigationActivities.AllChatsActivity.Static.friendsListener
+import com.vikanshu.flamechat.BottomNavigationActivities.AllChatsActivity.Static.listener
+import com.vikanshu.flamechat.FriendsData
 import com.vikanshu.flamechat.R
 import kotlinx.android.synthetic.main.activity_all_chats.*
 
 class AllChatsActivity : AppCompatActivity() {
+
+    object Static{
+        var allUsers = ArrayList<AllUsersData>()
+        var friendsList = ArrayList<FriendsData>()
+        var friendsListener = object : ChildEventListener{
+            override fun onCancelled(p0: DatabaseError?) {}
+            override fun onChildMoved(p0: DataSnapshot?, p1: String?) {}
+            override fun onChildChanged(p0: DataSnapshot?, p1: String?) {}
+            override fun onChildAdded(p0: DataSnapshot?, p1: String?) {
+                val uid = p0?.key.toString()
+                val type = p0?.value.toString()
+                friendsList.add(FriendsData(uid,type))
+            }
+            override fun onChildRemoved(p0: DataSnapshot?) {}
+        }
+        var listener = object : ChildEventListener{
+            override fun onCancelled(p0: DatabaseError?) {
+
+            }
+            override fun onChildMoved(p0: DataSnapshot?, p1: String?) {
+            }
+            override fun onChildChanged(p0: DataSnapshot?, p1: String?) {
+
+            }
+            override fun onChildAdded(p0: DataSnapshot?, p1: String?) {
+                val uid = p0?.key.toString()
+                val usermap = p0?.value as HashMap<String,String>
+                allUsers.add(AllUsersData(usermap["username"].toString(),usermap["email"].toString(),usermap["status"].toString(),
+                        usermap["image"].toString(),usermap["password"].toString(),uid))
+            }
+            override fun onChildRemoved(p0: DataSnapshot?) {
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,5 +81,13 @@ class AllChatsActivity : AppCompatActivity() {
                 else -> {false}
             }
         }
+    }
+    override fun onStart() {
+        super.onStart()
+        val usersDataFirebase = FirebaseDatabase.getInstance().reference.child("USERS")
+        val friendsDataFirebase = FirebaseDatabase.getInstance().reference
+                .child("FRIENDS")?.child(FirebaseAuth.getInstance().uid)
+        usersDataFirebase.addChildEventListener(listener)
+        friendsDataFirebase?.addChildEventListener(friendsListener)
     }
 }

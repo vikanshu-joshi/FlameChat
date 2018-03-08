@@ -77,6 +77,7 @@ class CreateAccountActivity : AppCompatActivity() {
                         val i = Intent(this, AllChatsActivity::class.java)
                         i.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
                         startActivity(i)
+                        this.finish()
                     }else{
                         // unsuccessful in saving data
                         // now delete the created user

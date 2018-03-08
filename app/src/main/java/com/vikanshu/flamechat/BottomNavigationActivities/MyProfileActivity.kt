@@ -24,6 +24,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import com.squareup.picasso.Callback
 import com.squareup.picasso.NetworkPolicy
+import com.vikanshu.flamechat.BottomNavigationActivities.AllChatsActivity.Static.friendsList
 import com.vikanshu.flamechat.R
 import com.vikanshu.flamechat.SplashActivity
 
@@ -193,6 +194,7 @@ class MyProfileActivity : AppCompatActivity() {
     // function to log out
     fun logout(v: View){
         firebaseAuth?.signOut()
+        friendsList.clear()
         showToast("You have logged out successfully")
         startActivity(Intent(this, SplashActivity::class.java))
         this.finish()
