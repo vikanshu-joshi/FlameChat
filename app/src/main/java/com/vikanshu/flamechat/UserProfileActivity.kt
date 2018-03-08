@@ -41,7 +41,7 @@ class UserProfileActivity : AppCompatActivity() {
         mImage = extras["image"].toString()
         mUid = extras["uid"].toString()
 
-
+        if (!isNetworkAvailable()) showToast("No Internet Connection")
 
         firebaseDatabse = FirebaseDatabase.getInstance().reference.child("FRIENDS")
 
@@ -98,7 +98,23 @@ class UserProfileActivity : AppCompatActivity() {
             }
         }
         else if (frndStatus == "S") showToast("Request already sent")
-        else if (frndStatus == "R") showToast("Request received")
+        else if (frndStatus == "R") {
+            firebaseDatabse?.child(FirebaseAuth.getInstance().uid)?.child(mUid)?.setValue("F")?.addOnCompleteListener {
+                if (it.isSuccessful){
+                    firebaseDatabse?.child(mUid)?.child(FirebaseAuth.getInstance().uid)?.setValue("F")?.addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            frndStatus = "F"
+                            showToast("You are now friends.")
+                            setFriendshipStatus()
+                        }else{
+                            showToast(it.exception?.message.toString())
+                        }
+                    }
+                }else{
+                    showToast(it.exception?.message.toString())
+                }
+            }
+        }
         else if (frndStatus == "F") showToast("Already Friends")
     }
 

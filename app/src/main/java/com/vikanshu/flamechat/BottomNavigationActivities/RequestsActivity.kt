@@ -76,6 +76,11 @@ class RequestsActivity : AppCompatActivity() {
                 }
             }
         }
+
+        val distinct = final_requests.distinctBy { allUsersData -> allUsersData.uid }
+        final_requests.clear()
+        for (i in distinct) final_requests.add(i)
+
         req_list = findViewById(R.id.requests_list)
         req_list?.divider = null
         adapter = AdapterSearch(this,final_requests)
@@ -119,7 +124,7 @@ class RequestsActivity : AppCompatActivity() {
             if (category.image == "default") holder.image?.setImageResource(R.drawable.default_avatar)
             else Picasso.with(context).load(Uri.parse(category.image)).placeholder(R.drawable.loading).into(holder.image)
             holder.name?.text = category.name
-            holder.status?.text = category.name
+            holder.status?.text = category.status
             return itemView
         }
 

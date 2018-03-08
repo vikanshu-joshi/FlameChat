@@ -75,6 +75,11 @@ class FriendsActivity : AppCompatActivity() {
                 }
             }
         }
+
+        val distinct = final_friends.distinctBy { allUsersData -> allUsersData.uid }
+        final_friends.clear()
+        for (i in distinct) final_friends.add(i)
+
         frnd_list?.divider = null
         adapter = AdapterSearch(this,final_friends)
         frnd_list?.adapter = adapter
@@ -118,7 +123,7 @@ class FriendsActivity : AppCompatActivity() {
             if (category.image == "default") holder.image?.setImageResource(R.drawable.default_avatar)
             else Picasso.with(context).load(Uri.parse(category.image)).placeholder(R.drawable.loading).into(holder.image)
             holder.name?.text = category.name
-            holder.status?.text = category.name
+            holder.status?.text = category.status
             return itemView
         }
 

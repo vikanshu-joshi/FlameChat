@@ -23,7 +23,12 @@ class AllChatsActivity : AppCompatActivity() {
         var friendsListener = object : ChildEventListener{
             override fun onCancelled(p0: DatabaseError?) {}
             override fun onChildMoved(p0: DataSnapshot?, p1: String?) {}
-            override fun onChildChanged(p0: DataSnapshot?, p1: String?) {}
+            override fun onChildChanged(p0: DataSnapshot?, p1: String?) {
+                val uid = p0?.key.toString()
+                val type = p0?.value.toString()
+                for (i in friendsList)
+                    if (i.uid == uid) i.type = type
+            }
             override fun onChildAdded(p0: DataSnapshot?, p1: String?) {
                 val uid = p0?.key.toString()
                 val type = p0?.value.toString()
