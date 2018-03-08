@@ -1,16 +1,13 @@
 package com.vikanshu.flamechat.BottomNavigationActivities
 
-import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.BaseAdapter
 import android.widget.ListView
 import android.widget.TextView
@@ -62,6 +59,10 @@ class RequestsActivity : AppCompatActivity() {
                 }
             }
         }
+
+        final_requests.clear()
+        requests.clear()
+
         for (i in friendsList) {
             if (i.type == "R") {
                 requests.add(i.uid)
@@ -79,19 +80,27 @@ class RequestsActivity : AppCompatActivity() {
         req_list?.divider = null
         adapter = AdapterSearch(this,final_requests)
         req_list?.adapter = adapter
-        req_list?.setOnItemClickListener { parent, view, position, id ->
-            val intent = Intent(this,UserProfileActivity::class.java)
-            val bundle = Bundle()
-            bundle.putString("username",final_requests[position].name)
-            bundle.putString("image",final_requests[position].image)
-            bundle.putString("status",final_requests[position].status)
-            bundle.putString("uid",final_requests[position].uid)
-            intent.putExtras(bundle)
-            startActivity(intent)
+        if (final_requests.isEmpty()){
+            req_list?.visibility = View.INVISIBLE
+            no_req?.visibility = View.VISIBLE
+        }
+        else{
+            req_list?.visibility = View.VISIBLE
+            no_req?.visibility = View.INVISIBLE
+            req_list?.setOnItemClickListener { parent, view, position, id ->
+                val intent = Intent(this,UserProfileActivity::class.java)
+                val bundle = Bundle()
+                bundle.putString("username",final_requests[position].name)
+                bundle.putString("image",final_requests[position].image)
+                bundle.putString("status",final_requests[position].status)
+                bundle.putString("uid",final_requests[position].uid)
+                intent.putExtras(bundle)
+                startActivity(intent)
+            }
         }
     }
 
-    class AdapterSearch(val context: Context, private val list: ArrayList<AllUsersData>): BaseAdapter(){
+    private class AdapterSearch(val context: Context, private val list: ArrayList<AllUsersData>): BaseAdapter(){
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
             val itemView: View
@@ -132,6 +141,5 @@ class RequestsActivity : AppCompatActivity() {
             var status: TextView ?= null
         }
     }
-
 
 }
