@@ -10,6 +10,9 @@ import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.iid.FirebaseInstanceId
 import com.rengwuxian.materialedittext.MaterialEditText
 import com.vikanshu.flamechat.BottomNavigationActivities.AllChatsActivity
 
@@ -20,6 +23,7 @@ class LogInActivity : AppCompatActivity() {
     private var logInBtn: Button ?= null
     private var firebaseAuth: FirebaseAuth ?= null
     private var progressDialog: ProgressDialog ?= null
+    private var database: DatabaseReference ?= null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,6 +55,8 @@ class LogInActivity : AppCompatActivity() {
             firebaseAuth?.signInWithEmailAndPassword(emailText,passwordText)?.addOnCompleteListener {
                 if (it.isSuccessful){
                     // user successfully logged in
+                    database = FirebaseDatabase.getInstance().reference.child("USERS")?.child(FirebaseAuth.getInstance()?.uid)
+                    database?.child("token")?.setValue(FirebaseInstanceId.getInstance().token)
                     progressDialog?.dismiss()
                     val i = Intent(this, AllChatsActivity::class.java)
                     i.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK

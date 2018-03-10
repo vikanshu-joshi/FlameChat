@@ -12,6 +12,7 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.iid.FirebaseInstanceId
 import com.rengwuxian.materialedittext.MaterialEditText
 import com.vikanshu.flamechat.BottomNavigationActivities.AllChatsActivity
 
@@ -68,8 +69,10 @@ class CreateAccountActivity : AppCompatActivity() {
                 // user created
                 // now save data in database
                 val usermap = HashMap<String,String>()
+                val token = FirebaseInstanceId.getInstance().token
                 usermap["username"] = name;usermap["email"] = mail;usermap["password"] = pass
                 usermap["image"] = "default";usermap["status"] = "I am new to FlameChat"
+                usermap["token"] = token.toString()
                 firebaseDatabase?.child("USERS")?.child(firebaseAuth?.uid)?.setValue(usermap)?.addOnCompleteListener {
                     if (it.isSuccessful){
                         // successful in saving data

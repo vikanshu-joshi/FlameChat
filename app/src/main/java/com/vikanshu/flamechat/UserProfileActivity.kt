@@ -31,6 +31,7 @@ class UserProfileActivity : AppCompatActivity() {
     private var frndStatusText: TextView ?= null
     private var frndStatusImage: ImageView ?= null
     private var firebaseDatabse: DatabaseReference ?= null
+    private var firebaseNotification: DatabaseReference ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +45,7 @@ class UserProfileActivity : AppCompatActivity() {
         if (!isNetworkAvailable()) showToast("No Internet Connection")
 
         firebaseDatabse = FirebaseDatabase.getInstance().reference.child("FRIENDS")
+        firebaseNotification = FirebaseDatabase.getInstance().reference.child("NOTIFICATIONS")
 
         usernameTextView = findViewById(R.id.usernameUserProfile)
         statusTextView = findViewById(R.id.statusUserProfile)
@@ -88,6 +90,10 @@ class UserProfileActivity : AppCompatActivity() {
                             frndStatus = "S"
                             showToast("Request Sent")
                             setFriendshipStatus()
+                            val usermap = HashMap<String,String>()
+                            usermap["from"] = FirebaseAuth.getInstance().uid.toString()
+                            usermap["type"] = "request"
+                            firebaseNotification?.child(mUid)?.push()?.setValue(usermap)
                         }else{
                             showToast(it.exception?.message.toString())
                         }
