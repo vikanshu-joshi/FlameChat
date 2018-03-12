@@ -193,7 +193,9 @@ class MyProfileActivity : AppCompatActivity() {
 
     // function to log out
     fun logout(v: View){
-        firebaseAuth?.signOut()
+        firebaseDatabase?.child("online")?.setValue(false)?.addOnSuccessListener {
+            firebaseAuth?.signOut()
+        }
         friendsList.clear()
         showToast("You have logged out successfully")
         startActivity(Intent(this, SplashActivity::class.java))

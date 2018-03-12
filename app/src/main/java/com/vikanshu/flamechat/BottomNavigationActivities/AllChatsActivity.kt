@@ -8,7 +8,11 @@ import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.jenzz.appstate.AppState
+import com.jenzz.appstate.AppStateListener
+import com.jenzz.appstate.AppStateMonitor
 import com.vikanshu.flamechat.AllUsersData
+import com.vikanshu.flamechat.BottomNavigationActivities.AllChatsActivity.Static.appStateMonitorListener
 import com.vikanshu.flamechat.BottomNavigationActivities.AllChatsActivity.Static.friendsListener
 import com.vikanshu.flamechat.BottomNavigationActivities.AllChatsActivity.Static.listener
 import com.vikanshu.flamechat.FriendsData
@@ -20,7 +24,7 @@ class AllChatsActivity : AppCompatActivity() {
     object Static{
         var allUsers = ArrayList<AllUsersData>()
         var friendsList = ArrayList<FriendsData>()
-        var friendsListener = object : ChildEventListener{
+        val friendsListener = object : ChildEventListener{
             override fun onCancelled(p0: DatabaseError?) {}
             override fun onChildMoved(p0: DataSnapshot?, p1: String?) {}
             override fun onChildChanged(p0: DataSnapshot?, p1: String?) {
@@ -36,7 +40,7 @@ class AllChatsActivity : AppCompatActivity() {
             }
             override fun onChildRemoved(p0: DataSnapshot?) {}
         }
-        var listener = object : ChildEventListener{
+        val listener = object : ChildEventListener{
             override fun onCancelled(p0: DatabaseError?) {
 
             }
@@ -54,7 +58,20 @@ class AllChatsActivity : AppCompatActivity() {
             override fun onChildRemoved(p0: DataSnapshot?) {
             }
         }
+        val appStateMonitorListener = object : AppStateListener {
+            override fun onAppDidEnterForeground() {
+                FirebaseDatabase.getInstance().reference.child("USERS").child(FirebaseAuth.getInstance().uid)
+                        .child("online").setValue(true)
+            }
+
+            override fun onAppDidEnterBackground() {
+                FirebaseDatabase.getInstance().reference.child("USERS").child(FirebaseAuth.getInstance().uid)
+                        .child("online").setValue(false)
+            }
+        }
     }
+
+    private var appState: AppStateMonitor ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,6 +103,9 @@ class AllChatsActivity : AppCompatActivity() {
                 else -> {false}
             }
         }
+        appState = AppStateMonitor.create(application)
+        appState?.addListener(appStateMonitorListener)
+        appState?.start()
     }
     override fun onStart() {
         super.onStart()

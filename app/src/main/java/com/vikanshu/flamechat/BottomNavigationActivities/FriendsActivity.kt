@@ -61,7 +61,6 @@ class FriendsActivity : AppCompatActivity() {
 
         frnd_list = findViewById(R.id.frnds_listview)
 
-
         for (i in AllChatsActivity.Static.friendsList) {
             if (i.type == "F") {
                 frnds.add(i.uid)

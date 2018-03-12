@@ -24,6 +24,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.jenzz.appstate:appstate:3.0.1'
     implementation 'com.firebaseui:firebase-ui-database:3.2.2'
     implementation 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.1.0'
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.6.+'
