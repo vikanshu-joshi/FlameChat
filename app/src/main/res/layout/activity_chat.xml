@@ -30,6 +30,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginStart="8dp"
+            android:onClick="backTop"
             android:src="@drawable/default_avatar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/backArrowChatScreen"
@@ -40,6 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            android:onClick="backTop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -49,9 +51,11 @@
             android:id="@+id/nameChatScreen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="15dp"
             android:fontFamily="@font/montserrat_alternates"
             android:textColor="@color/white"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="@+id/userImageChatScreen"
             app:layout_constraintStart_toEndOf="@+id/userImageChatScreen"
             app:layout_constraintTop_toTopOf="@+id/userImageChatScreen"
             tools:text="Vikanshu joshi" />
@@ -59,13 +63,12 @@
         <TextView
             android:id="@+id/onlineStatusChatScreen"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="1dp"
             android:layout_marginStart="12dp"
             android:textColor="@color/white"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/userImageChatScreen"
-            app:layout_constraintTop_toBottomOf="@+id/nameChatScreen"
-            tools:text="online" />
+            app:layout_constraintTop_toBottomOf="@+id/nameChatScreen" />
 
 
     </android.support.constraint.ConstraintLayout>
