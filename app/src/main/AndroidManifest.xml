@@ -70,9 +70,11 @@
             android:parentActivityName=".BottomNavigationActivities.MyProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Base.Theme.AppCompat" />
-        <activity android:name=".UserProfileActivity"
-            android:theme="@style/DarkGrayTop"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".UserProfileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/DarkGrayTop" />
+        <activity android:name=".ChatActivity"></activity>
     </application>
 
 </manifest>

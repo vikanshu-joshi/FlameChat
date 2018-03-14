@@ -1,10 +1,12 @@
 package com.vikanshu.flamechat.BottomNavigationActivities
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +15,7 @@ import android.widget.ListView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
 import com.vikanshu.flamechat.AllUsersData
+import com.vikanshu.flamechat.ChatActivity
 import com.vikanshu.flamechat.R
 import com.vikanshu.flamechat.UserProfileActivity
 import de.hdodenhof.circleimageview.CircleImageView
@@ -90,14 +93,31 @@ class FriendsActivity : AppCompatActivity() {
             frnd_list?.visibility = View.VISIBLE
             no_frnds?.visibility = View.INVISIBLE
             frnd_list?.setOnItemClickListener { parent, view, position, id ->
-                val intent = Intent(this, UserProfileActivity::class.java)
-                val bundle = Bundle()
-                bundle.putString("username",final_friends[position].name)
-                bundle.putString("image",final_friends[position].image)
-                bundle.putString("status",final_friends[position].status)
-                bundle.putString("uid",final_friends[position].uid)
-                intent.putExtras(bundle)
-                startActivity(intent)
+                val alert = AlertDialog.Builder(this)
+                alert.setItems(arrayOf("Profile","Send Message")) { dialog, which ->
+                    if (which == 0){
+                        dialog.dismiss()
+                        val intent = Intent(this@FriendsActivity, UserProfileActivity::class.java)
+                        val bundle = Bundle()
+                        bundle.putString("username",final_friends[position].name)
+                        bundle.putString("image",final_friends[position].image)
+                        bundle.putString("status",final_friends[position].status)
+                        bundle.putString("uid",final_friends[position].uid)
+                        intent.putExtras(bundle)
+                        startActivity(intent)
+                    }else if (which == 1){
+                        dialog.dismiss()
+                        val intent = Intent(this@FriendsActivity, ChatActivity::class.java)
+                        val bundle = Bundle()
+                        bundle.putString("username",final_friends[position].name)
+                        bundle.putString("image",final_friends[position].image)
+                        bundle.putString("status",final_friends[position].status)
+                        bundle.putString("uid",final_friends[position].uid)
+                        intent.putExtras(bundle)
+                        startActivity(intent)
+                    }
+                }
+                alert.show()
             }
         }
 
