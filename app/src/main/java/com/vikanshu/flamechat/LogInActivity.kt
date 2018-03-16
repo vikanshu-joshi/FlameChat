@@ -57,6 +57,8 @@ class LogInActivity : AppCompatActivity() {
                     // user successfully logged in
                     database = FirebaseDatabase.getInstance().reference.child("USERS")?.child(FirebaseAuth.getInstance()?.uid)
                     database?.child("token")?.setValue(FirebaseInstanceId.getInstance().token)
+                    database = FirebaseDatabase.getInstance().reference.child("ONLINE_STATUS").child(FirebaseAuth.getInstance()?.uid)
+                    database?.setValue("online")
                     progressDialog?.dismiss()
                     val i = Intent(this, AllChatsActivity::class.java)
                     i.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK

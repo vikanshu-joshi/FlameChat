@@ -4,10 +4,7 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.jenzz.appstate.AppState
 import com.jenzz.appstate.AppStateListener
 import com.jenzz.appstate.AppStateMonitor
@@ -60,13 +57,14 @@ class AllChatsActivity : AppCompatActivity() {
         }
         val appStateMonitorListener = object : AppStateListener {
             override fun onAppDidEnterForeground() {
-                FirebaseDatabase.getInstance().reference.child("ONLINE_STATUS")
-                        .child(FirebaseAuth.getInstance().uid).setValue("online")
+                if (FirebaseAuth.getInstance().currentUser != null)
+                    FirebaseDatabase.getInstance().reference.child("ONLINE_STATUS")
+                            .child(FirebaseAuth.getInstance().uid).setValue("online")
             }
-
             override fun onAppDidEnterBackground() {
-                FirebaseDatabase.getInstance().reference.child("ONLINE_STATUS")
-                        .child(FirebaseAuth.getInstance().uid).setValue("offline")
+                if (FirebaseAuth.getInstance().currentUser != null)
+                    FirebaseDatabase.getInstance().reference.child("ONLINE_STATUS")
+                            .child(FirebaseAuth.getInstance().uid).setValue(ServerValue.TIMESTAMP)
             }
         }
     }

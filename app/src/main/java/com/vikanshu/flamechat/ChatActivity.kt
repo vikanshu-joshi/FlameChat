@@ -10,6 +10,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ChatActivity : AppCompatActivity() {
 
@@ -38,14 +40,17 @@ class ChatActivity : AppCompatActivity() {
         username = extras["username"].toString()
         image = extras["image"].toString()
         myUid = FirebaseAuth.getInstance().uid.toString()
-        database = FirebaseDatabase.getInstance().reference.child("MESSAGES").child(myUid)
+        database = FirebaseDatabase.getInstance().reference.child("MESSAGES").child(myUid).child(uid)
         onlineStatus = FirebaseDatabase.getInstance().reference.child("ONLINE_STATUS").child(uid)
         onlineStatus?.addValueEventListener(object: ValueEventListener{
             override fun onCancelled(p0: DatabaseError?) {}
             override fun onDataChange(p0: DataSnapshot?) {
-                setOnlineStatus?.text = p0?.value.toString()
-                if (p0?.value == "offline") onlineLight?.setImageResource(R.drawable.ic_offline)
-                else if (p0?.value == "online") onlineLight?.setImageResource(R.drawable.ic_online)
+                if (p0?.value == "online") { onlineLight?.setImageResource(R.drawable.ic_online);setOnlineStatus?.text = "online"}
+                else {
+                    onlineLight?.setImageResource(R.drawable.ic_offline)
+                    val lastSeen = SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
+                    setOnlineStatus?.text = "Last seen "+ lastSeen.format(Date(p0?.value as Long)).toString()
+                }
             }
         })
 

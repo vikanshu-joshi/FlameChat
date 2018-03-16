@@ -76,6 +76,10 @@ class CreateAccountActivity : AppCompatActivity() {
                 firebaseDatabase?.child("USERS")?.child(firebaseAuth?.uid)?.setValue(usermap)?.addOnCompleteListener {
                     if (it.isSuccessful){
                         // successful in saving data
+
+                        FirebaseDatabase.getInstance().reference.child("ONLINE_STATUS")
+                                .child(FirebaseAuth.getInstance()?.uid)?.setValue("online") // saving that we are now online
+
                         progressDialog?.dismiss()
                         val i = Intent(this, AllChatsActivity::class.java)
                         i.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK

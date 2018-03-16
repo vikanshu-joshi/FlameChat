@@ -65,8 +65,7 @@
             android:fontFamily="@font/montserrat_alternates"
             android:maxWidth="200dp"
             android:textColor="@color/white"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="@+id/userImageChatScreen"
+            android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@+id/userImageChatScreen"
             app:layout_constraintTop_toTopOf="@+id/userImageChatScreen"
             tools:text="Vikanshu joshi" />
@@ -78,7 +77,6 @@
             android:layout_marginStart="15dp"
             android:textColor="@color/white"
             android:textSize="12sp"
-            android:visibility="invisible"
             app:layout_constraintStart_toEndOf="@+id/userImageChatScreen"
             app:layout_constraintTop_toBottomOf="@+id/nameChatScreen"
             tools:text="online" />
