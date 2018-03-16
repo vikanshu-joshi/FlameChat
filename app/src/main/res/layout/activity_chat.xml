@@ -19,11 +19,21 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="0dp"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="?android:attr/actionBarSize"
         android:background="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/onlineLightChatScreen"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="5dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="@+id/nameChatScreen"
+            app:layout_constraintStart_toEndOf="@+id/nameChatScreen"
+            app:layout_constraintTop_toTopOf="@+id/nameChatScreen" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/userImageChatScreen"
@@ -53,8 +63,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:fontFamily="@font/montserrat_alternates"
+            android:maxWidth="200dp"
             android:textColor="@color/white"
-            android:textSize="22sp"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/userImageChatScreen"
             app:layout_constraintStart_toEndOf="@+id/userImageChatScreen"
             app:layout_constraintTop_toTopOf="@+id/userImageChatScreen"
@@ -63,12 +74,14 @@
         <TextView
             android:id="@+id/onlineStatusChatScreen"
             android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:layout_marginStart="12dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
             android:textColor="@color/white"
             android:textSize="12sp"
+            android:visibility="invisible"
             app:layout_constraintStart_toEndOf="@+id/userImageChatScreen"
-            app:layout_constraintTop_toBottomOf="@+id/nameChatScreen" />
+            app:layout_constraintTop_toBottomOf="@+id/nameChatScreen"
+            tools:text="online" />
 
 
     </android.support.constraint.ConstraintLayout>
@@ -110,6 +123,7 @@
             android:layout_height="35dp"
             android:layout_marginEnd="10dp"
             android:background="@drawable/send_message_edittext"
+            android:onClick="sendMessageBtn"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_send_white_24dp"
             app:layout_constraintBottom_toBottomOf="@+id/messageChatScreen"

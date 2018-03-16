@@ -60,13 +60,13 @@ class AllChatsActivity : AppCompatActivity() {
         }
         val appStateMonitorListener = object : AppStateListener {
             override fun onAppDidEnterForeground() {
-                FirebaseDatabase.getInstance().reference.child("USERS").child(FirebaseAuth.getInstance().uid)
-                        .child("online").setValue(true)
+                FirebaseDatabase.getInstance().reference.child("ONLINE_STATUS")
+                        .child(FirebaseAuth.getInstance().uid).setValue("online")
             }
 
             override fun onAppDidEnterBackground() {
-                FirebaseDatabase.getInstance().reference.child("USERS").child(FirebaseAuth.getInstance().uid)
-                        .child("online").setValue(false)
+                FirebaseDatabase.getInstance().reference.child("ONLINE_STATUS")
+                        .child(FirebaseAuth.getInstance().uid).setValue("offline")
             }
         }
     }
