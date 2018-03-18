@@ -1,6 +1,8 @@
 package com.vikanshu.flamechat
 
 class UsersData{
+
+
     private var mName: String = ""
     private var mStatus: String = ""
     private var mImage: String = ""
@@ -18,8 +20,8 @@ class UsersData{
     fun getstatus(): String {return this.mStatus}
     fun getimage(): String {return this.mImage}
 
-    fun setusername(name: String){ mName = name }
-    fun setstatus(status: String){ mStatus = status }
-    fun setimage(image: String){ mImage = image }
+    fun setusername(name: String){ this.mName = name }
+    fun setstatus(status: String){ this.mStatus = status }
+    fun setimage(image: String){ this.mImage = image }
 
 }
