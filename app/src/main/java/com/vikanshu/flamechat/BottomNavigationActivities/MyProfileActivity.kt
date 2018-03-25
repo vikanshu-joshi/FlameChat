@@ -26,6 +26,7 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.NetworkPolicy
 import com.vikanshu.flamechat.BottomNavigationActivities.AllChatsActivity.Static.friendsList
 import com.vikanshu.flamechat.R
+import com.vikanshu.flamechat.SharedPrefs
 import com.vikanshu.flamechat.SplashActivity
 
 
@@ -142,7 +143,9 @@ class MyProfileActivity : AppCompatActivity() {
                         if (it.isSuccessful) {
                             dialog.dismiss()
                             progressDialog?.dismiss()
-                            status?.text = input.text.toString()
+                            val text = input.text.toString()
+                            status?.text = text
+                            SharedPrefs(this@MyProfileActivity).setStatus(text)
                             showToast("Status updates successfully")
                         } else {
                             dialog.dismiss()
@@ -195,6 +198,7 @@ class MyProfileActivity : AppCompatActivity() {
     fun logout(v: View){
         FirebaseDatabase.getInstance().reference.child("ONLINE_STATUS").child(firebaseUser?.uid)
                 ?.setValue(ServerValue.TIMESTAMP)
+        SharedPrefs(this@MyProfileActivity).setData(arrayListOf("not set","default","I am new to FlameChat"))
         firebaseAuth?.signOut()
         friendsList.clear()
         showToast("You have logged out successfully")
@@ -222,6 +226,7 @@ class MyProfileActivity : AppCompatActivity() {
                     val downloadUri = it.result.downloadUrl
                     firebaseDatabase?.child("image")?.setValue(downloadUri.toString())?.addOnCompleteListener {
                         if (it.isSuccessful) {
+                            SharedPrefs(this@MyProfileActivity).setImage(downloadUri.toString())
                             progressDialog?.dismiss()
                             Picasso.with(this@MyProfileActivity).load(downloadUri)
                                     .networkPolicy(NetworkPolicy.OFFLINE).placeholder(R.drawable.loading)

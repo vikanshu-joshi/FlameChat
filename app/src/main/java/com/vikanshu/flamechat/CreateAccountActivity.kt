@@ -79,7 +79,7 @@ class CreateAccountActivity : AppCompatActivity() {
 
                         FirebaseDatabase.getInstance().reference.child("ONLINE_STATUS")
                                 .child(FirebaseAuth.getInstance()?.uid)?.setValue("online") // saving that we are now online
-
+                        SharedPrefs(this@CreateAccountActivity).setData(arrayListOf(name,"default","I am new to FlameChat"))
                         progressDialog?.dismiss()
                         val i = Intent(this, AllChatsActivity::class.java)
                         i.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK

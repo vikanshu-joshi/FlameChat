@@ -10,8 +10,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.google.firebase.iid.FirebaseInstanceId
 import com.rengwuxian.materialedittext.MaterialEditText
 import com.vikanshu.flamechat.BottomNavigationActivities.AllChatsActivity
@@ -59,6 +58,16 @@ class LogInActivity : AppCompatActivity() {
                     database?.child("token")?.setValue(FirebaseInstanceId.getInstance().token)
                     database = FirebaseDatabase.getInstance().reference.child("ONLINE_STATUS").child(FirebaseAuth.getInstance()?.uid)
                     database?.setValue("online")
+                    FirebaseDatabase.getInstance().reference.child("USERS")
+                            .child(FirebaseAuth.getInstance().uid).addValueEventListener(object : ValueEventListener {
+                        override fun onCancelled(p0: DatabaseError?) {}
+                        override fun onDataChange(p0: DataSnapshot?) {
+                            val value = p0?.value as HashMap<*,*>
+                            SharedPrefs(this@LogInActivity).setData(arrayListOf(value["username"].toString()
+                                    ,value["image"].toString(),value["status"].toString()))
+                        }
+
+                    })
                     progressDialog?.dismiss()
                     val i = Intent(this, AllChatsActivity::class.java)
                     i.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK

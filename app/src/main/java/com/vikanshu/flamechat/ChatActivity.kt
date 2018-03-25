@@ -132,12 +132,26 @@ class ChatActivity : AppCompatActivity() {
             msgMap["from"] = "him"
             msgMap["time"] = ServerValue.TIMESTAMP
             msgMap["text"] = message as Any
-            val msgId = ('a'..'z').randomString(5)
+            val msgId = database?.push()?.key
             database?.child(uid)?.child(myUid)?.child(msgId)?.setValue(msgMap)?.addOnCompleteListener {
                 if (it.isSuccessful) {
                     msgMap["from"] = "me"
-                    database?.child(myUid)?.child(uid)?.child(msgId)?.setValue(msgMap)?.addOnFailureListener {
-                        Toast.makeText(this, "Unable to send message", Toast.LENGTH_LONG).show()
+                    database?.child(myUid)?.child(uid)?.child(msgId)?.setValue(msgMap)?.addOnCompleteListener {
+                        if (it.isComplete){
+                            val newMap = HashMap<String,String>()
+                            newMap["name"] = username
+                            newMap["image"] = image
+                            newMap["uid"] = uid
+                            newMap["last"] = "You : " + message.toString()
+                            FirebaseDatabase.getInstance().reference.child("CHATS").child(myUid).child(uid)?.setValue(newMap)
+                            newMap["name"] = SharedPrefs(this).getName()
+                            newMap["image"] = SharedPrefs(this).getImage()
+                            newMap["uid"] = myUid
+                            newMap["last"] = message.toString()
+                            FirebaseDatabase.getInstance().reference.child("CHATS").child(uid).child(myUid)?.setValue(newMap)
+                        }else{
+                            Toast.makeText(this, "Unable to send message", Toast.LENGTH_LONG).show()
+                        }
                     }
                     msgEditText?.text?.clear()
                 } else {
@@ -148,10 +162,6 @@ class ChatActivity : AppCompatActivity() {
 
         }
     }
-
-    private fun ClosedRange<Char>.randomString(length: Int) =
-            (1..length).map { (Random().nextInt(endInclusive.toInt() - start.toInt()) + start.toInt()).toChar() }
-                    .joinToString("")
 
     class MessageListViewHolder(itemView: View, var context: Context) : RecyclerView.ViewHolder(itemView) {
 
