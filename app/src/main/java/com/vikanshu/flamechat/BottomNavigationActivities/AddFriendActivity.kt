@@ -6,6 +6,7 @@ import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
@@ -20,11 +21,13 @@ import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_add_friend.*
 import kotlinx.android.synthetic.main.single_user_list.view.*
 import android.view.LayoutInflater
+import android.widget.ImageView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.vikanshu.flamechat.R
 import com.vikanshu.flamechat.UserProfileActivity
 import com.vikanshu.flamechat.UsersData
+import kotlinx.android.synthetic.main.all_users_view.view.*
 
 
 class AddFriendActivity : AppCompatActivity() {
@@ -37,14 +40,14 @@ class AddFriendActivity : AppCompatActivity() {
             // Create a new instance of the ViewHolder, in this case we are using a custom
             // layout called R.layout.message for each item
             val view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.single_user_list, parent, false)
+                    .inflate(R.layout.all_users_view, parent, false)
             return usersListViewHolder(view, this@AddFriendActivity)
         }
 
         override fun onBindViewHolder(holder: usersListViewHolder, position: Int, model: UsersData) {
 
             holder.setName(model.getusername())
-            holder.setStatus(model.getstatus())
+//            holder.setStatus(model.getstatus())
             holder.setImage(model.getimage())
             holder.content_holder.setOnClickListener {
                 val intent = Intent(this@AddFriendActivity,UserProfileActivity::class.java)
@@ -101,7 +104,7 @@ class AddFriendActivity : AppCompatActivity() {
         firebaseDatabase = FirebaseDatabase.getInstance().reference.child("USERS").child(FirebaseAuth.getInstance().uid)
         usersList = findViewById(R.id.allUsersRecylerView)
         usersList?.setHasFixedSize(true)
-        usersList?.layoutManager = LinearLayoutManager(this)
+        usersList?.layoutManager = GridLayoutManager(this,2)
         usersList?.adapter = adapter
 
     }
@@ -118,15 +121,15 @@ class AddFriendActivity : AppCompatActivity() {
 
 
     class usersListViewHolder(itemView: View, var context: Context) : RecyclerView.ViewHolder(itemView) {
-        private val imageView = itemView.findViewById<CircleImageView>(image_single_user_view)
-        val content_holder = itemView.findViewById<ConstraintLayout>(R.id.single_user_main)
+        private val imageView = itemView.findViewById<ImageView>(R.id.image_user_view)
+        val content_holder = itemView.findViewById<ConstraintLayout>(R.id._user_main)
         fun setName(name: String) {
-            itemView.username_single_user_view.text = name
+            itemView.username_user_view.text = name
         }
 
-        fun setStatus(status: String) {
-            itemView.status_single_user_view.text = status
-        }
+//        fun setStatus(status: String) {
+//            itemView.status_single_user_view.text = status
+//        }
 
         fun setImage(image: String) {
             if (image == "default") imageView.setImageResource(R.drawable.default_avatar)
