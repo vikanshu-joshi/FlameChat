@@ -13,6 +13,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import com.firebase.ui.common.ChangeEventType
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
@@ -79,6 +80,12 @@ class ChatActivity : AppCompatActivity() {
         if (image == "default") setImage?.setImageResource(R.drawable.default_avatar)
         else Picasso.with(this@ChatActivity).load(Uri.parse(image)).placeholder(R.drawable.loading).into(setImage)
 
+
+        chats_list?.setHasFixedSize(true)
+        val manager = LinearLayoutManager(this@ChatActivity)
+        manager.stackFromEnd = true
+        chats_list?.layoutManager = manager
+
         val query = FirebaseDatabase.getInstance().reference.child("MESSAGES")
                 .child(myUid).child(uid).limitToLast(Int.MAX_VALUE).orderByChild("time")
 
@@ -101,11 +108,20 @@ class ChatActivity : AppCompatActivity() {
                     holder.setHisMsg(model.gettext())
                 }
             }
+
+            override fun onDataChanged() {
+                manager.scrollToPosition(itemCount)
+                chats_list?.smoothScrollToPosition(itemCount)
+                super.onDataChanged()
+            }
+
+            override fun onChildChanged(type: ChangeEventType, snapshot: DataSnapshot, newIndex: Int, oldIndex: Int) {
+                manager.scrollToPosition(itemCount)
+                chats_list?.smoothScrollToPosition(itemCount)
+                super.onChildChanged(type, snapshot, newIndex, oldIndex)
+            }
+
         }
-        chats_list?.setHasFixedSize(true)
-        val manager = LinearLayoutManager(this@ChatActivity)
-        manager.stackFromEnd = true
-        chats_list?.layoutManager = manager
         chats_list?.adapter = adapter
 
     }

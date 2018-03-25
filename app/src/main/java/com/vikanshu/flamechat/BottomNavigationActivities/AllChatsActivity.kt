@@ -101,7 +101,6 @@ class AllChatsActivity : AppCompatActivity() {
                     .inflate(R.layout.chat_user_layout, parent, false)
             return ChatHolder(view,this@AllChatsActivity)
         }
-
         override fun onBindViewHolder(holder: ChatHolder, position: Int, model: Chat) {
             holder.setName(model.getname())
             holder.setLast(model.getlast())
