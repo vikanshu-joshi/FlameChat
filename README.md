@@ -4,18 +4,18 @@ FlameChat is a simple realtime chat application developed for practice using kot
 ## Screenshots :-
 
 <p align="center">
-  <img src="https://github.com/vikanshu-joshi/FlameChat/blob/master/screenshots/splash.png" width="360" height="640"/>
-  <img src="https://github.com/vikanshu-joshi/FlameChat/blob/master/screenshots/sign_in.png" width="360" height="640"/>
-  <img src="https://github.com/vikanshu-joshi/FlameChat/blob/master/screenshots/create.png" width="360" height="640"/>
-  <img src="https://github.com/vikanshu-joshi/FlameChat/blob/master/screenshots/friends.png" width="360" height="640"/>
-  <img src="https://github.com/vikanshu-joshi/FlameChat/blob/master/screenshots/requests.png" width="360" height="640"/>
-  <img src="https://github.com/vikanshu-joshi/FlameChat/blob/master/screenshots/no_requests.png" width="360" height="640"/>
-  <img src="https://github.com/vikanshu-joshi/FlameChat/blob/master/screenshots/my_profile.png" width="360" height="640"/>
-  <img src="https://github.com/vikanshu-joshi/FlameChat/blob/master/screenshots/crop.png" width="360" height="640"/>
-  <img src="https://github.com/vikanshu-joshi/FlameChat/blob/master/screenshots/chats.png" width="360" height="640"/>
-  <img src="https://github.com/vikanshu-joshi/FlameChat/blob/master/screenshots/chat_1.png" width="360" height="640"/>
-  <img src="https://github.com/vikanshu-joshi/FlameChat/blob/master/screenshots/chat_2.png" width="360" height="640"/>
-  <img src="https://github.com/vikanshu-joshi/FlameChat/blob/master/screenshots/chat_3.png" width="360" height="640"/>
+  <img src="https://github.com/vikanshu-joshi/FlameChat/blob/master/Screenshots/splash.png" width="360" height="640"/>
+  <img src="https://github.com/vikanshu-joshi/FlameChat/blob/master/Screenshots/sign_in.png" width="360" height="640"/>
+  <img src="https://github.com/vikanshu-joshi/FlameChat/blob/master/Screenshots/create.png" width="360" height="640"/>
+  <img src="https://github.com/vikanshu-joshi/FlameChat/blob/master/Screenshots/friends.png" width="360" height="640"/>
+  <img src="https://github.com/vikanshu-joshi/FlameChat/blob/master/Screenshots/requests.png" width="360" height="640"/>
+  <img src="https://github.com/vikanshu-joshi/FlameChat/blob/master/Screenshots/no_requests.png" width="360" height="640"/>
+  <img src="https://github.com/vikanshu-joshi/FlameChat/blob/master/Screenshots/my_profile.png" width="360" height="640"/>
+  <img src="https://github.com/vikanshu-joshi/FlameChat/blob/master/Screenshots/crop.png" width="360" height="640"/>
+  <img src="https://github.com/vikanshu-joshi/FlameChat/blob/master/Screenshots/chats.png" width="360" height="640"/>
+  <img src="https://github.com/vikanshu-joshi/FlameChat/blob/master/Screenshots/chat_1.png" width="360" height="640"/>
+  <img src="https://github.com/vikanshu-joshi/FlameChat/blob/master/Screenshots/chat_2.png" width="360" height="640"/>
+  <img src="https://github.com/vikanshu-joshi/FlameChat/blob/master/Screenshots/chat_3.png" width="360" height="640"/>
 </p>
 
 ## LICENSE
